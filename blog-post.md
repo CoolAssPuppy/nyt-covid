@@ -46,7 +46,7 @@ And for the GDP data:
 
 I wrote a blog post on [cleaning up public data][cleanup-data-post] that I recommend reading. In this case, you will need to delete the rows at the top and bottom of your spreadsheet, turn the FIPS and GDP columns into numbers, and search and replace the handful of instances of "(NA)" with zeroes. Save your file as a CSV.
 
-If you'd prefer not to download and manipulate the dataset yourself, you can get the CSV files yourself from [my GitHub repo][my-github].
+If you'd prefer not to download and manipulate the dataset yourself, you can get the CSV files from [my GitHub repo][my-github].
 
 # Setting up your database and ingesting data
 
