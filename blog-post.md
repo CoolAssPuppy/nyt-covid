@@ -10,7 +10,7 @@ To complete this analysis, I needed to combine three public datasets:
 - The [MIT Election Data Science Lab county-by-county election data][election-data]
 - The [US Commerce Department county-by-county GDP data][gdp-data]
 
-**Important to note: I am not an epidimiologist or expert in any way, shape, or form. The public data is available for all of us to use, and this is a tutorial that helps us use that public data to understand the world around us.** I'll also add that there's no shame in wanting to steep yourself in data about this crisis, nor is there any shame in walling yourself off from the data. We all cope with anxiety and stress in different ways, and at this moment in our history, taking the time to appreciate our differences will go a long way.
+**Important to note: I am not an epidemiologist or expert in any way, shape, or form. The public data is available for all of us to use, and this is a tutorial that helps us use that public data to understand the world around us.** I'll also add that there's no shame in wanting to steep yourself in data about this crisis, nor is there any shame in walling yourself off from the data. We all cope with anxiety and stress in different ways, and at this moment in our history, taking the time to appreciate our differences will go a long way.
 
 # Top-line insight
 Through this analysis, I was able to conclude several things:
