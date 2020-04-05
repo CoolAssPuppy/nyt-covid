@@ -53,6 +53,21 @@ WHERE date >= current_date - interval '10' day
 GROUP BY date, region, total_cases, total_deaths
 ORDER BY date DESC, region DESC \crosstabview region date total_cases;
 
+-- How is New York doing?
+-- Include all boroughs for completeness, but NYT isn't reporting them broken out yet
+SELECT date, state, county, sum(cases) as total_cases, sum(deaths) as total_deaths
+FROM counties
+WHERE county IN ('New York City', 'Manhattan', 'Bronx', 'Brooklyn', 'Queens', 'Staten Island') AND state = 'New York'
+GROUP BY date, state, county
+ORDER BY date desc;
+
+CREATE VIEW new_york_city AS
+SELECT date, sum(cases) as total_cases, sum(deaths) as total_deaths
+FROM counties
+WHERE county IN ('New York City', 'Manhattan', 'Bronx', 'Brooklyn', 'Queens', 'Staten Island') AND state = 'New York'
+GROUP BY date
+ORDER BY date desc;
+
 -- View the daily rate of change in cases as reverse chronologial order as date columns
 -- first let's view the raw change in cases
 
