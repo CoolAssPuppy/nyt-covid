@@ -16,10 +16,23 @@ FROM world
 GROUP BY date
 ORDER BY date DESC;
 
+-- View country by country trend in reverse chronological order
+SELECT date, country, latitude, longitude, sum (cases) as total_cases, sum(recovered) as total_recovered, sum (deaths) as total_deaths
+FROM world
+GROUP BY date, country, latitude, longitude
+ORDER BY date DESC, country ASC;
+
 -- View US national trend in reverse chronological order
 SELECT date, sum (cases) as total_cases, sum (deaths) as total_deaths
 FROM states
 GROUP BY date
+ORDER BY date DESC;
+
+-- View percentage of cases from US
+SELECT date, 100 * cases / (SELECT sum(cases) FROM world WHERE date = numerator_world.date) as percentage
+FROM world numerator_world
+WHERE country = 'US'
+GROUP BY date, cases
 ORDER BY date DESC;
 
 -- View latest state data in reverse chronological order
@@ -74,6 +87,24 @@ SELECT date, sum(cases) as total_cases, sum(deaths) as total_deaths
 FROM counties
 WHERE county IN ('New York City', 'Manhattan', 'Bronx', 'Brooklyn', 'Queens', 'Staten Island') AND state = 'New York'
 GROUP BY date
+ORDER BY date desc;
+
+-- What about anticipated Election 2020 battleground counties?
+CREATE VIEW battleground_counties AS
+SELECT date, state, county, sum(cases) as total_cases, sum(deaths) as total_deaths
+FROM counties
+WHERE 
+    (county IN ('Erie') AND state = 'Pennsylvania') OR
+    (county IN ('Saulk') AND state = 'Wisconsin') OR
+    (county IN ('Muskegon') AND state = 'Michigan') OR
+    (county in ('Maricopa') AND state = 'Arizona') OR
+    (county IN ('Tarrant') AND state = 'Texas') OR
+    (county IN ('New Hanover') AND state = 'North Carolina') OR
+    (county IN ('Peach') AND state = 'Georgia') OR
+    (county IN ('Washington') AND state = 'Minnesota') OR
+    (county IN ('Hillsborough') AND state = 'New Hampshire') OR
+    (county IN ('Lincoln') AND state = 'Maine')
+GROUP BY date, state, county
 ORDER BY date desc;
 
 -- View the daily rate of change in cases as reverse chronologial order as date columns
