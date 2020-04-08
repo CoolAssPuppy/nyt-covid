@@ -3,12 +3,20 @@
 -- delete existing COVID data
 DROP TABLE counties CASCADE;
 DROP TABLE states CASCADE;
+DROP TABLE world CASCADE;
 
 -- copy COVID data
 \COPY counties FROM covid-19-data/us-counties.csv CSV HEADER;
 \COPY states FROM covid-19-data/us-states.csv CSV HEADER;
+\COPY world FROM covid-19/data/time-series-19-covid-combined.csv CSV HEADER;
 
--- View national trend in reverse chronological order
+-- View international trend in reverse chronoogical order
+SELECT date, sum (cases) as total_cases, sum(recovered) as total_recovered, sum (deaths) as total_deaths
+FROM world
+GROUP BY date
+ORDER BY date DESC;
+
+-- View US national trend in reverse chronological order
 SELECT date, sum (cases) as total_cases, sum (deaths) as total_deaths
 FROM states
 GROUP BY date
