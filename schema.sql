@@ -33,6 +33,31 @@ WHERE county IN ('Los Angeles', 'Ventura', 'Orange', 'San Bernardino', 'Riversid
 GROUP BY date
 ORDER BY date DESC;
 
+CREATE VIEW new_york_city AS
+SELECT date, sum(cases) as total_cases, sum(deaths) as total_deaths
+FROM counties
+WHERE county IN ('New York City', 'Manhattan', 'Bronx', 'Brooklyn', 'Queens', 'Staten Island') AND state = 'New York'
+GROUP BY date
+ORDER BY date desc;
+
+-- What about anticipated Election 2020 battleground counties?
+CREATE VIEW battleground_counties AS
+SELECT date, state, county, sum(cases) as total_cases, sum(deaths) as total_deaths
+FROM counties
+WHERE 
+    (county IN ('Erie') AND state = 'Pennsylvania') OR
+    (county IN ('Saulk') AND state = 'Wisconsin') OR
+    (county IN ('Muskegon') AND state = 'Michigan') OR
+    (county in ('Maricopa') AND state = 'Arizona') OR
+    (county IN ('Tarrant') AND state = 'Texas') OR
+    (county IN ('New Hanover') AND state = 'North Carolina') OR
+    (county IN ('Peach') AND state = 'Georgia') OR
+    (county IN ('Washington') AND state = 'Minnesota') OR
+    (county IN ('Hillsborough') AND state = 'New Hampshire') OR
+    (county IN ('Lincoln') AND state = 'Maine')
+GROUP BY date, state, county
+ORDER BY date desc;
+
 CREATE TABLE "world" (
     date DATE,
     country TEXT,

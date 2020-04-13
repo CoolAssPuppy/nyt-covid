@@ -197,6 +197,21 @@ FROM counties
 GROUP BY state, county, day
 ORDER BY day ASC;
 
+-- View data from the latest hotspots
+
+SELECT date as "time", state, deaths
+FROM states
+WHERE state IN ('Louisiana', 'Georgia', 'Michigan', 'Florida')
+GROUP BY time, state, deaths
+ORDER BY time DESC, state ASC;
+
+SELECT date as "time", state, deaths
+FROM states
+WHERE state IN ('Louisiana', 'Georgia', 'Michigan', 'Florida') AND
+      date >= current_date - interval '10' day
+GROUP BY time, state, deaths
+ORDER BY time DESC, state ASC \crosstabview state time deaths;
+
 -- ELECTION DATA
 
 -- normalize election data script
