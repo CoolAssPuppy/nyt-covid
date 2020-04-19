@@ -1,0 +1,3535 @@
+{
+    "annotations": {
+        "list": [
+            {
+                "builtIn": 1,
+                "datasource": "-- Grafana --",
+                "enable": true,
+                "hide": true,
+                "iconColor": "rgba(0, 211, 255, 1)",
+                "name": "Annotations & Alerts",
+                "type": "dashboard"
+            }
+        ]
+    },
+    "editable": true,
+    "gnetId": null,
+    "graphTooltip": 0,
+    "id": 5,
+    "iteration": 1587233759121,
+    "links": [],
+    "panels": [
+        {
+            "content": "\n# Public Health Data\n\n\n",
+            "datasource": null,
+            "gridPos": {
+                "h": 2,
+                "w": 24,
+                "x": 0,
+                "y": 0
+            },
+            "id": 41,
+            "mode": "markdown",
+            "options": {},
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "",
+            "transparent": true,
+            "type": "text"
+        },
+        {
+            "circleMaxSize": 30,
+            "circleMinSize": "1",
+            "colors": [
+                "#37872D",
+                "rgba(237, 129, 40, 0.89)",
+                "#FADE2A",
+                "#FFA6B0",
+                "#FF7383",
+                "#E02F44",
+                "#E02F44"
+            ],
+            "datasource": "NYT Covid 19 ",
+            "decimals": 0,
+            "esMetric": "Count",
+            "gridPos": {
+                "h": 10,
+                "w": 18,
+                "x": 0,
+                "y": 2
+            },
+            "hideEmpty": false,
+            "hideZero": false,
+            "id": 36,
+            "initialZoom": "2",
+            "locationData": "table",
+            "mapCenter": "North America",
+            "mapCenterLatitude": 40,
+            "mapCenterLongitude": -100,
+            "maxDataPoints": 1,
+            "mouseWheelZoom": false,
+            "options": {},
+            "showLegend": true,
+            "stickyLabels": false,
+            "tableQueryOptions": {
+                "geohashField": "geohash",
+                "labelField": "country",
+                "latitudeField": "latitude",
+                "longitudeField": "longitude",
+                "metricField": "total_deaths",
+                "queryType": "coordinates"
+            },
+            "targets": [
+                {
+                    "format": "table",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date, country, latitude, longitude, sum (deaths) as total_deaths\nFROM world\nGROUP BY date, country, latitude, longitude\nORDER BY date DESC, country ASC;",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": "100,1000,10000,25000,50000,100000",
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Worldwide Deaths",
+            "type": "grafana-worldmap-panel",
+            "unitPlural": "",
+            "unitSingle": "",
+            "valueName": "current"
+        },
+        {
+            "cacheTimeout": null,
+            "datasource": "NYT Covid 19 ",
+            "gridPos": {
+                "h": 5,
+                "w": 6,
+                "x": 18,
+                "y": 2
+            },
+            "id": 31,
+            "links": [],
+            "options": {
+                "fieldOptions": {
+                    "calcs": [
+                        "firstNotNull"
+                    ],
+                    "defaults": {
+                        "mappings": [],
+                        "thresholds": {
+                            "mode": "absolute",
+                            "steps": [
+                                {
+                                    "color": "green",
+                                    "value": null
+                                },
+                                {
+                                    "color": "yellow",
+                                    "value": 30
+                                },
+                                {
+                                    "color": "red",
+                                    "value": 60
+                                }
+                            ]
+                        },
+                        "unit": "percent"
+                    },
+                    "overrides": [],
+                    "values": false
+                },
+                "orientation": "auto",
+                "showThresholdLabels": false,
+                "showThresholdMarkers": true
+            },
+            "pluginVersion": "6.6.2",
+            "targets": [
+                {
+                    "format": "table",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as time, 100 * cases / (SELECT sum(cases) FROM world WHERE date = numerator_world.date) as percentage\nFROM world numerator_world\nWHERE country = 'US'\nGROUP BY date, cases\nORDER BY date DESC;",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "US Percentage Cases",
+            "type": "gauge"
+        },
+        {
+            "cacheTimeout": null,
+            "datasource": "NYT Covid 19 ",
+            "gridPos": {
+                "h": 5,
+                "w": 6,
+                "x": 18,
+                "y": 7
+            },
+            "id": 34,
+            "links": [],
+            "options": {
+                "fieldOptions": {
+                    "calcs": [
+                        "firstNotNull"
+                    ],
+                    "defaults": {
+                        "mappings": [],
+                        "thresholds": {
+                            "mode": "absolute",
+                            "steps": [
+                                {
+                                    "color": "green",
+                                    "value": null
+                                },
+                                {
+                                    "color": "yellow",
+                                    "value": 30
+                                },
+                                {
+                                    "color": "red",
+                                    "value": 60
+                                }
+                            ]
+                        },
+                        "unit": "percent"
+                    },
+                    "overrides": [],
+                    "values": false
+                },
+                "orientation": "auto",
+                "showThresholdLabels": false,
+                "showThresholdMarkers": true
+            },
+            "pluginVersion": "6.6.2",
+            "targets": [
+                {
+                    "format": "table",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as time, 100 * deaths / (SELECT sum(deaths) FROM world WHERE date = numerator_world.date) as percentage\nFROM world numerator_world\nWHERE country = 'US'\nGROUP BY date, deaths\nORDER BY date DESC;",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "US Percentage Deaths",
+            "type": "gauge"
+        },
+        {
+            "aliasColors": {
+                "total_cases": "blue",
+                "total_deaths": "red"
+            },
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "NYT Covid 19 ",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 10,
+                "w": 9,
+                "x": 0,
+                "y": 12
+            },
+            "hiddenSeries": false,
+            "id": 2,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [
+                {
+                    "alias": "total_deaths",
+                    "yaxis": 2
+                }
+            ],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", sum (cases) as global_cases\nFROM world\nGROUP BY time\nORDER BY time;",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                },
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", sum (cases) as us_cases\nFROM world\nWHERE country = 'US'\nGROUP BY time\nORDER BY time;",
+                    "refId": "B",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Global vs US Cases",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {
+                "total_cases": "blue",
+                "total_deaths": "red"
+            },
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "NYT Covid 19 ",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 10,
+                "w": 9,
+                "x": 9,
+                "y": 12
+            },
+            "hiddenSeries": false,
+            "id": 30,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [
+                {
+                    "alias": "total_deaths",
+                    "yaxis": 2
+                }
+            ],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", sum (deaths) as global_deaths\nFROM world\nGROUP BY time\nORDER BY time;",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                },
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", sum (deaths) as us_deaths\nFROM world\nWHERE country = 'US'\nGROUP BY time\nORDER BY time;",
+                    "refId": "B",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Global vs US Deaths",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "cacheTimeout": null,
+            "datasource": "NYT Covid 19 ",
+            "gridPos": {
+                "h": 4,
+                "w": 6,
+                "x": 18,
+                "y": 12
+            },
+            "id": 6,
+            "links": [],
+            "options": {
+                "colorMode": "value",
+                "fieldOptions": {
+                    "calcs": [
+                        "first"
+                    ],
+                    "defaults": {
+                        "mappings": [
+                            {
+                                "id": 0,
+                                "op": "=",
+                                "text": "N/A",
+                                "type": 1,
+                                "value": "null"
+                            }
+                        ],
+                        "nullValueMode": "connected",
+                        "thresholds": {
+                            "mode": "absolute",
+                            "steps": [
+                                {
+                                    "color": "#FF9830",
+                                    "value": null
+                                },
+                                {
+                                    "color": "#E0B400",
+                                    "value": 500000
+                                },
+                                {
+                                    "color": "#d44a3a",
+                                    "value": 1000000
+                                }
+                            ]
+                        },
+                        "unit": "none"
+                    },
+                    "overrides": [],
+                    "values": false
+                },
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "horizontal"
+            },
+            "pluginVersion": "6.6.2",
+            "targets": [
+                {
+                    "format": "table",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date, sum(cases)\nFROM states\nGROUP BY date\nORDER BY date DESC",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "US Current Cases",
+            "type": "stat"
+        },
+        {
+            "cacheTimeout": null,
+            "datasource": "NYT Covid 19 ",
+            "gridPos": {
+                "h": 3,
+                "w": 6,
+                "x": 18,
+                "y": 16
+            },
+            "id": 7,
+            "links": [],
+            "options": {
+                "colorMode": "value",
+                "fieldOptions": {
+                    "calcs": [
+                        "first"
+                    ],
+                    "defaults": {
+                        "mappings": [
+                            {
+                                "id": 0,
+                                "op": "=",
+                                "text": "N/A",
+                                "type": 1,
+                                "value": "null"
+                            }
+                        ],
+                        "nullValueMode": "connected",
+                        "thresholds": {
+                            "mode": "absolute",
+                            "steps": [
+                                {
+                                    "color": "#FF9830",
+                                    "value": null
+                                },
+                                {
+                                    "color": "#E0B400",
+                                    "value": 10000
+                                },
+                                {
+                                    "color": "super-light-red",
+                                    "value": 25000
+                                },
+                                {
+                                    "color": "light-red",
+                                    "value": 50000
+                                },
+                                {
+                                    "color": "dark-red",
+                                    "value": 100000
+                                }
+                            ]
+                        },
+                        "unit": "none"
+                    },
+                    "overrides": [],
+                    "values": false
+                },
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "horizontal"
+            },
+            "pluginVersion": "6.6.2",
+            "targets": [
+                {
+                    "format": "table",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date, sum(deaths)\nFROM states\nGROUP BY date\nORDER BY date DESC",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "US Current Deaths",
+            "type": "stat"
+        },
+        {
+            "cacheTimeout": null,
+            "datasource": "NYT Covid 19 ",
+            "description": "(Dependent on Testing Efficiency)",
+            "gridPos": {
+                "h": 3,
+                "w": 6,
+                "x": 18,
+                "y": 19
+            },
+            "id": 50,
+            "links": [],
+            "options": {
+                "colorMode": "value",
+                "fieldOptions": {
+                    "calcs": [
+                        "first"
+                    ],
+                    "defaults": {
+                        "mappings": [
+                            {
+                                "id": 0,
+                                "op": "=",
+                                "text": "N/A",
+                                "type": 1,
+                                "value": "null"
+                            }
+                        ],
+                        "nullValueMode": "connected",
+                        "thresholds": {
+                            "mode": "absolute",
+                            "steps": [
+                                {
+                                    "color": "#FF9830",
+                                    "value": null
+                                },
+                                {
+                                    "color": "#E0B400",
+                                    "value": 10000
+                                },
+                                {
+                                    "color": "super-light-red",
+                                    "value": 25000
+                                },
+                                {
+                                    "color": "light-red",
+                                    "value": 50000
+                                },
+                                {
+                                    "color": "dark-red",
+                                    "value": 100000
+                                }
+                            ]
+                        },
+                        "unit": "percent"
+                    },
+                    "overrides": [],
+                    "values": false
+                },
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "horizontal"
+            },
+            "pluginVersion": "6.6.2",
+            "targets": [
+                {
+                    "format": "table",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date, sum(deaths) / sum(cases) AS mortality\nFROM states\nGROUP BY date\nORDER BY date DESC",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "US Current Mortality Rate",
+            "type": "stat"
+        },
+        {
+            "aliasColors": {
+                "total_cases": "yellow",
+                "total_deaths": "red"
+            },
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "NYT Covid 19 ",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 10,
+                "w": 12,
+                "x": 0,
+                "y": 22
+            },
+            "hiddenSeries": false,
+            "id": 26,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [
+                {
+                    "alias": "total_deaths",
+                    "yaxis": 2
+                }
+            ],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", sum (cases) as total_cases\nFROM states\nGROUP BY time\nORDER BY time;",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                },
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", sum (deaths) as total_deaths\nFROM states\nGROUP BY time\nORDER BY time;",
+                    "refId": "B",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "National Cases and Deaths",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {
+                "total_cases": "yellow",
+                "total_deaths": "red"
+            },
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "NYT Covid 19 ",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 10,
+                "w": 12,
+                "x": 12,
+                "y": 22
+            },
+            "hiddenSeries": false,
+            "id": 14,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", sum (cases) as total_cases, sum (deaths) as total_deaths\nFROM states\nGROUP BY time\nORDER BY time;",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "National Cases and Deaths (Log Scale)",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 2,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {},
+            "bars": true,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "NYT Covid 19 ",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 0,
+                "y": 32
+            },
+            "hiddenSeries": false,
+            "id": 12,
+            "legend": {
+                "alignAsTable": false,
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "rightSide": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": false,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": true,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", 'NorCal' AS region, total_cases\nFROM northern_california\nGROUP BY date, region, total_cases\nORDER BY date",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                },
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", 'SoCal' AS region, total_cases\nFROM southern_california\nGROUP BY date, region, total_cases\nORDER BY date",
+                    "refId": "B",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Northern and Southern California Cases",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {},
+            "bars": true,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "NYT Covid 19 ",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 12,
+                "y": 32
+            },
+            "hiddenSeries": false,
+            "id": 13,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": false,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": true,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", 'NorCal' AS region, total_deaths\nFROM northern_california\nGROUP BY date, region, total_deaths\nORDER BY date",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                },
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", 'SoCal' AS region, total_deaths\nFROM southern_california\nGROUP BY date, region, total_deaths\nORDER BY date",
+                    "refId": "B",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Northern and Southern California Deaths",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "NYT Covid 19 ",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 0,
+                "y": 40
+            },
+            "hiddenSeries": false,
+            "id": 15,
+            "legend": {
+                "alignAsTable": false,
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "rightSide": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 2,
+            "points": true,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": true,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", 'NorCal' AS region, total_cases\nFROM northern_california\nGROUP BY date, region, total_cases\nORDER BY date",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Bay Area Cases",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "NYT Covid 19 ",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 12,
+                "y": 40
+            },
+            "hiddenSeries": false,
+            "id": 16,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 2,
+            "points": true,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", 'NorCal' AS region, total_deaths\nFROM northern_california\nGROUP BY date, region, total_deaths\nORDER BY date",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Bay Area Deaths",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "NYT Covid 19 ",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 0,
+                "y": 48
+            },
+            "hiddenSeries": false,
+            "id": 17,
+            "legend": {
+                "alignAsTable": false,
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "rightSide": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 2,
+            "points": true,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": true,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", 'NorCal' AS region, total_cases\nFROM northern_california\nGROUP BY date, region, total_cases\nORDER BY date",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                },
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", 'New York' AS region, sum(cases) as total_cases\nFROM counties\nWHERE county = 'New York City' AND state = 'New York'\nGROUP BY date\nORDER BY date",
+                    "refId": "B",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Bay Area vs NYC Cases",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "NYT Covid 19 ",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 12,
+                "y": 48
+            },
+            "hiddenSeries": false,
+            "id": 18,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 2,
+            "points": true,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", 'NorCal' AS region, total_deaths\nFROM northern_california\nGROUP BY date, region, total_deaths\nORDER BY date",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                },
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", 'New York' AS region, sum(deaths) as total_deaths\nFROM counties\nWHERE county = 'New York City' AND state = 'New York'\nGROUP BY date\nORDER BY date",
+                    "refId": "B",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Bay Area vs NYC Deaths",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "NYT Covid 19 ",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 9,
+                "w": 24,
+                "x": 0,
+                "y": 56
+            },
+            "hiddenSeries": false,
+            "id": 25,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", state, deaths\nFROM states\nWHERE state IN ('Louisiana', 'Georgia', 'Michigan', 'Florida')\nGROUP BY time, state, deaths\nORDER BY time, state ASC;",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Key New Hotspot Deaths",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "NYT Covid 19 ",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 9,
+                "w": 12,
+                "x": 0,
+                "y": 65
+            },
+            "hiddenSeries": false,
+            "id": 4,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", state, cases\nFROM states\nWHERE state IN ($state_picker)\nGROUP BY time, state, cases\nORDER BY time, state ASC;",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "State by State Cases",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "NYT Covid 19 ",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 9,
+                "w": 12,
+                "x": 12,
+                "y": 65
+            },
+            "hiddenSeries": false,
+            "id": 38,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", state, cases\nFROM states\nWHERE state IN ($state_picker)\nGROUP BY time, state, cases\nORDER BY time, state ASC;",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "State by State Cases (Log Scale)",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 2,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "NYT Covid 19 ",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 9,
+                "w": 12,
+                "x": 0,
+                "y": 74
+            },
+            "hiddenSeries": false,
+            "id": 24,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", state, deaths\nFROM states\nWHERE state in ($state_picker)\nGROUP BY time, state, deaths\nORDER BY time, state ASC;",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "State by State Deaths",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "NYT Covid 19 ",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 9,
+                "w": 12,
+                "x": 12,
+                "y": 74
+            },
+            "hiddenSeries": false,
+            "id": 39,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", state, deaths\nFROM states\nWHERE state in ($state_picker)\nGROUP BY time, state, deaths\nORDER BY time, state ASC;",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "State by State Deaths (Log Scale)",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 2,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "content": "\n# Political Considerations\n\n\n\n",
+            "datasource": null,
+            "gridPos": {
+                "h": 2,
+                "w": 24,
+                "x": 0,
+                "y": 83
+            },
+            "id": 43,
+            "mode": "markdown",
+            "options": {},
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "",
+            "transparent": true,
+            "type": "text"
+        },
+        {
+            "aliasColors": {
+                "clinton_cases": "dark-blue",
+                "clinton_deaths": "light-blue",
+                "trump_cases": "red",
+                "trump_deaths": "light-red"
+            },
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "NYT Covid 19 ",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 11,
+                "w": 12,
+                "x": 0,
+                "y": 85
+            },
+            "hiddenSeries": false,
+            "id": 9,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pluginVersion": "6.6.2",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT counties.date as \"time\", sum (counties.cases) as trump_cases\nFROM counties\nWHERE counties.fips IN (SELECT fips FROM trump_counties)\nGROUP BY date\nORDER BY date DESC;",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                },
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT counties.date as \"time\", sum (counties.cases) as clinton_cases\nFROM counties\nWHERE counties.fips IN (SELECT fips FROM clinton_counties)\nGROUP BY date\nORDER BY date DESC;",
+                    "refId": "B",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Trump vs Clinton County Cases",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {
+                "clinton_cases": "dark-blue",
+                "clinton_deaths": "light-blue",
+                "trump_cases": "red",
+                "trump_deaths": "light-red"
+            },
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "NYT Covid 19 ",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 11,
+                "w": 12,
+                "x": 12,
+                "y": 85
+            },
+            "hiddenSeries": false,
+            "id": 10,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pluginVersion": "6.6.2",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT counties.date as \"time\", sum (counties.deaths) as trump_deaths\nFROM counties\nWHERE counties.fips IN (SELECT fips FROM trump_counties)\nGROUP BY date\nORDER BY date DESC;",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                },
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT counties.date as \"time\", sum (counties.deaths) as clinton_deaths\nFROM counties\nWHERE counties.fips IN (SELECT fips FROM clinton_counties)\nGROUP BY date\nORDER BY date DESC;",
+                    "refId": "B",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Trump vs Clinton County Deaths",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {
+                "clinton_cases": "dark-blue",
+                "clinton_deaths": "light-blue",
+                "tc": "dark-yellow",
+                "td": "dark-red",
+                "trump_cases": "red",
+                "trump_deaths": "light-red"
+            },
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "NYT Covid 19 ",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 11,
+                "w": 24,
+                "x": 0,
+                "y": 96
+            },
+            "hiddenSeries": false,
+            "id": 37,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pluginVersion": "6.6.2",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [
+                {
+                    "alias": "td",
+                    "yaxis": 2
+                }
+            ],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as time, sum(total_cases) as tc\nFROM battleground_counties\nGROUP BY date;",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                },
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as time, sum(total_deaths) as td\nFROM battleground_counties\nGROUP BY date;",
+                    "refId": "B",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "2020 Battleground County Cases and Deaths",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "datasource": "NYT Covid 19 ",
+            "gridPos": {
+                "h": 5,
+                "w": 6,
+                "x": 0,
+                "y": 107
+            },
+            "id": 46,
+            "options": {
+                "colorMode": "value",
+                "fieldOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "defaults": {
+                        "decimals": 2,
+                        "mappings": [],
+                        "thresholds": {
+                            "mode": "absolute",
+                            "steps": [
+                                {
+                                    "color": "green",
+                                    "value": null
+                                },
+                                {
+                                    "color": "#EAB839",
+                                    "value": 5
+                                },
+                                {
+                                    "color": "red",
+                                    "value": 7
+                                }
+                            ]
+                        },
+                        "unit": "percent"
+                    },
+                    "overrides": [],
+                    "values": false
+                },
+                "graphMode": "area",
+                "justifyMode": "center",
+                "orientation": "auto"
+            },
+            "pluginVersion": "6.6.2",
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT time_bucket('30d', date) AS time,\n       (100 * sum(unemployed) / sum (population)) AS value\nFROM employment\nGROUP BY time\nORDER BY time ASC;\n",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "National Unemployment Rate",
+            "type": "stat"
+        },
+        {
+            "datasource": "NYT Covid 19 ",
+            "gridPos": {
+                "h": 5,
+                "w": 6,
+                "x": 6,
+                "y": 107
+            },
+            "id": 47,
+            "options": {
+                "colorMode": "value",
+                "fieldOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "defaults": {
+                        "decimals": 2,
+                        "mappings": [],
+                        "thresholds": {
+                            "mode": "absolute",
+                            "steps": [
+                                {
+                                    "color": "green",
+                                    "value": null
+                                },
+                                {
+                                    "color": "#EAB839",
+                                    "value": 5
+                                },
+                                {
+                                    "color": "red",
+                                    "value": 7
+                                }
+                            ]
+                        },
+                        "unit": "percent"
+                    },
+                    "overrides": [],
+                    "values": false
+                },
+                "graphMode": "area",
+                "justifyMode": "center",
+                "orientation": "auto"
+            },
+            "pluginVersion": "6.6.2",
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT time_bucket('30d', date) AS time,\n       (100 * sum(unemployed) / sum (population)) AS value\nFROM employment\nWHERE employment.fips IN (SELECT fips FROM counties WHERE counties.state = 'California')\nGROUP BY time;\n",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "California Unemployment Rate",
+            "type": "stat"
+        },
+        {
+            "datasource": "NYT Covid 19 ",
+            "gridPos": {
+                "h": 5,
+                "w": 6,
+                "x": 12,
+                "y": 107
+            },
+            "id": 48,
+            "options": {
+                "colorMode": "value",
+                "fieldOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "defaults": {
+                        "decimals": 2,
+                        "mappings": [],
+                        "thresholds": {
+                            "mode": "absolute",
+                            "steps": [
+                                {
+                                    "color": "green",
+                                    "value": null
+                                },
+                                {
+                                    "color": "#EAB839",
+                                    "value": 5
+                                },
+                                {
+                                    "color": "red",
+                                    "value": 7
+                                }
+                            ]
+                        },
+                        "unit": "percent"
+                    },
+                    "overrides": [],
+                    "values": false
+                },
+                "graphMode": "area",
+                "justifyMode": "center",
+                "orientation": "auto"
+            },
+            "pluginVersion": "6.6.2",
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT time_bucket('30d', date) AS time,\n       (100 * sum(unemployed) / sum (population)) AS value\nFROM employment\nWHERE employment.fips IN (SELECT fips FROM counties WHERE state IN ($state_picker))\nGROUP BY time;\n",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Selected States Unemployment Rate",
+            "type": "stat"
+        },
+        {
+            "datasource": "NYT Covid 19 ",
+            "gridPos": {
+                "h": 5,
+                "w": 6,
+                "x": 18,
+                "y": 107
+            },
+            "id": 49,
+            "options": {
+                "colorMode": "value",
+                "fieldOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "defaults": {
+                        "decimals": 2,
+                        "mappings": [],
+                        "thresholds": {
+                            "mode": "absolute",
+                            "steps": [
+                                {
+                                    "color": "green",
+                                    "value": null
+                                },
+                                {
+                                    "color": "#EAB839",
+                                    "value": 5
+                                },
+                                {
+                                    "color": "red",
+                                    "value": 7
+                                }
+                            ]
+                        },
+                        "unit": "percent"
+                    },
+                    "overrides": [],
+                    "values": false
+                },
+                "graphMode": "area",
+                "justifyMode": "center",
+                "orientation": "auto"
+            },
+            "pluginVersion": "6.6.2",
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT time_bucket('30d', date) AS time,\n       (100 * sum(unemployed) / sum (population)) AS value\nFROM employment\nWHERE employment.fips IN (SELECT fips FROM battleground_counties)\nGROUP BY time;\n",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "2020 Battleground Counties Unemployment Rate",
+            "type": "stat"
+        },
+        {
+            "content": "\n# Raw Data\n\n\n\n",
+            "datasource": null,
+            "gridPos": {
+                "h": 2,
+                "w": 24,
+                "x": 0,
+                "y": 112
+            },
+            "id": 44,
+            "mode": "markdown",
+            "options": {},
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "",
+            "transparent": true,
+            "type": "text"
+        },
+        {
+            "columns": [],
+            "datasource": "NYT Covid 19 ",
+            "fontSize": "100%",
+            "gridPos": {
+                "h": 11,
+                "w": 24,
+                "x": 0,
+                "y": 114
+            },
+            "id": 22,
+            "options": {},
+            "pageSize": null,
+            "showHeader": true,
+            "sort": {
+                "col": 0,
+                "desc": true
+            },
+            "styles": [
+                {
+                    "alias": "Date",
+                    "align": "left",
+                    "colorMode": null,
+                    "colors": [
+                        "rgba(245, 54, 54, 0.9)",
+                        "rgba(237, 129, 40, 0.89)",
+                        "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "Time",
+                    "thresholds": [],
+                    "type": "date",
+                    "unit": "short"
+                },
+                {
+                    "alias": "",
+                    "align": "left",
+                    "colorMode": "cell",
+                    "colors": [
+                        "#FF9830",
+                        "#E0B400",
+                        "rgba(245, 54, 54, 0.9)"
+                    ],
+                    "decimals": 2,
+                    "pattern": "/.*/",
+                    "thresholds": [
+                        "1000",
+                        "10000"
+                    ],
+                    "type": "number",
+                    "unit": "locale"
+                }
+            ],
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT state, date as time, cases\nFROM states\nWHERE state in ($state_picker)\nGROUP BY state, date, cases\nORDER BY state ASC, date DESC;",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "State Cases Table",
+            "transform": "timeseries_to_columns",
+            "type": "table"
+        },
+        {
+            "columns": [],
+            "datasource": "NYT Covid 19 ",
+            "fontSize": "100%",
+            "gridPos": {
+                "h": 11,
+                "w": 24,
+                "x": 0,
+                "y": 125
+            },
+            "id": 23,
+            "options": {},
+            "pageSize": null,
+            "showHeader": true,
+            "sort": {
+                "col": null,
+                "desc": false
+            },
+            "styles": [
+                {
+                    "alias": "Date",
+                    "align": "left",
+                    "colorMode": null,
+                    "colors": [
+                        "rgba(245, 54, 54, 0.9)",
+                        "rgba(237, 129, 40, 0.89)",
+                        "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "Time",
+                    "thresholds": [],
+                    "type": "date",
+                    "unit": "short"
+                },
+                {
+                    "alias": "",
+                    "align": "left",
+                    "colorMode": "cell",
+                    "colors": [
+                        "#56A64B",
+                        "#E0B400",
+                        "rgba(245, 54, 54, 0.9)"
+                    ],
+                    "decimals": 2,
+                    "pattern": "/.*/",
+                    "thresholds": [
+                        "100",
+                        "1000"
+                    ],
+                    "type": "number",
+                    "unit": "locale"
+                }
+            ],
+            "targets": [
+                {
+                    "aggregation": "Last",
+                    "decimals": 2,
+                    "displayAliasType": "Warning / Critical",
+                    "displayType": "Regular",
+                    "displayValueWithAlias": "Never",
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT state, date as time, deaths\nFROM states\nWHERE state IN ($state_picker)\nGROUP BY state, time, deaths\nORDER BY time DESC, state ASC;",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "units": "none",
+                    "valueHandler": "Number Threshold",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "State Deaths Table",
+            "transform": "timeseries_to_columns",
+            "type": "table"
+        },
+        {
+            "columns": [],
+            "datasource": "NYT Covid 19 ",
+            "fontSize": "100%",
+            "gridPos": {
+                "h": 11,
+                "w": 24,
+                "x": 0,
+                "y": 136
+            },
+            "id": 20,
+            "options": {},
+            "pageSize": 1000,
+            "showHeader": true,
+            "sort": {
+                "col": 0,
+                "desc": false
+            },
+            "styles": [
+                {
+                    "alias": "",
+                    "align": "left",
+                    "colorMode": null,
+                    "colors": [
+                        "rgba(245, 54, 54, 0.9)",
+                        "rgba(237, 129, 40, 0.89)",
+                        "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "date",
+                    "thresholds": [],
+                    "type": "date",
+                    "unit": "short"
+                },
+                {
+                    "alias": "",
+                    "align": "left",
+                    "colorMode": "cell",
+                    "colors": [
+                        "#FF9830",
+                        "#E0B400",
+                        "rgba(245, 54, 54, 0.9)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 0,
+                    "mappingType": 1,
+                    "pattern": "cases",
+                    "thresholds": [
+                        "1000",
+                        "10000"
+                    ],
+                    "type": "number",
+                    "unit": "locale"
+                },
+                {
+                    "alias": "",
+                    "align": "auto",
+                    "colorMode": "cell",
+                    "colors": [
+                        "#FF9830",
+                        "#E0B400",
+                        "rgba(245, 54, 54, 0.9)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 0,
+                    "mappingType": 1,
+                    "pattern": "deaths",
+                    "thresholds": [
+                        "100",
+                        "1000"
+                    ],
+                    "type": "number",
+                    "unit": "locale"
+                },
+                {
+                    "alias": "",
+                    "align": "left",
+                    "colorMode": null,
+                    "colors": [
+                        "rgba(245, 54, 54, 0.9)",
+                        "rgba(237, 129, 40, 0.89)",
+                        "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "decimals": 2,
+                    "pattern": "/.*/",
+                    "thresholds": [],
+                    "type": "number",
+                    "unit": "short"
+                }
+            ],
+            "targets": [
+                {
+                    "format": "table",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT state, date, cases, deaths\nFROM states\nWHERE date >= current_date - interval '10' day and\n      state IN ($state_picker)\nGROUP BY state, date, cases, deaths\nORDER BY state ASC, date DESC;",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Table of Cases and Deaths by State",
+            "transform": "table",
+            "type": "table"
+        }
+    ],
+    "refresh": "",
+    "schemaVersion": 22,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+        "list": [
+            {
+                "allValue": null,
+                "current": {
+                    "text": "",
+                    "value": [
+                        ""
+                    ]
+                },
+                "datasource": "NYT Covid 19 ",
+                "definition": "SELECT state FROM states ORDER BY state ASC",
+                "hide": 0,
+                "includeAll": true,
+                "label": "State",
+                "multi": true,
+                "name": "state_picker",
+                "options": [],
+                "query": "SELECT state FROM states ORDER BY state ASC",
+                "refresh": 1,
+                "regex": "",
+                "skipUrlSync": false,
+                "sort": 0,
+                "tagValuesQuery": "",
+                "tags": [],
+                "tagsQuery": "",
+                "type": "query",
+                "useTags": false
+            }
+        ]
+    },
+    "time": {
+        "from": "now-30d",
+        "to": "now"
+    },
+    "timepicker": {
+        "refresh_intervals": [
+            "5s",
+            "10s",
+            "30s",
+            "1m",
+            "5m",
+            "15m",
+            "30m",
+            "1h",
+            "2h",
+            "1d"
+        ]
+    },
+    "timezone": "",
+    "title": "Covid 19 NYT",
+    "uid": "0EQkb3rWk",
+    "version": 56
+}

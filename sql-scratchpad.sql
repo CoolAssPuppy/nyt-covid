@@ -10,6 +10,12 @@ DROP TABLE world CASCADE;
 \COPY states FROM covid-19-data/us-states.csv CSV HEADER;
 \COPY world FROM covid-19/data/time-series-19-covid-combined.csv CSV HEADER;
 
+-- get unemployment data: https://www.bls.gov/lau/
+-- refresh employment data
+DROP TABLE employment CASCADE;
+\COPY employment FROM unemployment/unemployment.csv CSV HEADER;
+
+
 -- View international trend in reverse chronoogical order
 SELECT date, sum (cases) as total_cases, sum(recovered) as total_recovered, sum (deaths) as total_deaths
 FROM world
@@ -91,7 +97,7 @@ ORDER BY date desc;
 
 -- What about anticipated Election 2020 battleground counties?
 CREATE VIEW battleground_counties AS
-SELECT date, state, county, sum(cases) as total_cases, sum(deaths) as total_deaths
+SELECT date, fips, state, county, sum(cases) as total_cases, sum(deaths) as total_deaths
 FROM counties
 WHERE 
     (county IN ('Erie') AND state = 'Pennsylvania') OR
@@ -104,12 +110,11 @@ WHERE
     (county IN ('Washington') AND state = 'Minnesota') OR
     (county IN ('Hillsborough') AND state = 'New Hampshire') OR
     (county IN ('Lincoln') AND state = 'Maine')
-GROUP BY date, state, county
+GROUP BY date, fips, state, county
 ORDER BY date desc;
 
 -- View the daily rate of change in cases as reverse chronologial order as date columns
 -- first let's view the raw change in cases
-
 SELECT time_bucket('1 day', date) AS day,
        state,
        cases,
@@ -334,3 +339,23 @@ WHERE gdp.fips IN (SELECT fips FROM trump_counties);
 SELECT sum(dollars) AS total_gdp
 FROM gdp
 WHERE gdp.fips IN (SELECT fips FROM counties WHERE cases > 100 AND date = current_date - 1);
+
+-- EMPLOYMENT DATA
+SELECT time_bucket('30d', date) AS day,
+       (100 * sum(unemployed) / sum (population)) AS unemployment_rate
+FROM employment
+WHERE employment.fips IN (SELECT fips FROM clinton_counties)
+GROUP BY date;
+
+SELECT time_bucket('30d', date) AS day,
+       (100 * sum(unemployed) / sum (population)) AS unemployment_rate
+FROM employment
+WHERE employment.fips IN (SELECT fips FROM trump_counties)
+GROUP BY date;
+
+-- EMPLOYMENT RATE NOW
+SELECT time_bucket('30d', date) AS time,
+       (100 * sum(unemployed) / sum (population)) AS value
+FROM employment
+WHERE employment.fips IN (SELECT fips FROM battleground_counties)
+GROUP BY date;

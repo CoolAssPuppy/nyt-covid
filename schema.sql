@@ -42,7 +42,7 @@ ORDER BY date desc;
 
 -- What about anticipated Election 2020 battleground counties?
 CREATE VIEW battleground_counties AS
-SELECT date, state, county, sum(cases) as total_cases, sum(deaths) as total_deaths
+SELECT date, fips, state, county, sum(cases) as total_cases, sum(deaths) as total_deaths
 FROM counties
 WHERE 
     (county IN ('Erie') AND state = 'Pennsylvania') OR
@@ -55,7 +55,7 @@ WHERE
     (county IN ('Washington') AND state = 'Minnesota') OR
     (county IN ('Hillsborough') AND state = 'New Hampshire') OR
     (county IN ('Lincoln') AND state = 'Maine')
-GROUP BY date, state, county
+GROUP BY date, fips, state, county
 ORDER BY date desc;
 
 CREATE TABLE "world" (
@@ -70,6 +70,15 @@ CREATE TABLE "world" (
 );
 SELECT create_hypertable('world', 'date', 'country', 2, create_default_indexes=>FALSE);
 CREATE INDEX ON world (date ASC, country);
+
+CREATE TABLE "employment" (
+    fips NUMERIC,
+    date DATE,
+    population NUMERIC,
+    employed NUMERIC,
+    unemployed NUMERIC,
+    unemploymentrate NUMERIC
+);
 
 CREATE TABLE "elections" (
     year NUMERIC,
