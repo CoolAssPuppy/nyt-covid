@@ -16,7 +16,7 @@
     "gnetId": null,
     "graphTooltip": 0,
     "id": 5,
-    "iteration": 1587233759121,
+    "iteration": 1587573452033,
     "links": [],
     "panels": [
         {
@@ -281,6 +281,7 @@
             "dashLength": 10,
             "dashes": false,
             "datasource": "NYT Covid 19 ",
+            "description": "Sweden has elected not to do social distancing and is instead aiming for herd immunity.",
             "fill": 1,
             "fillGradient": 0,
             "gridPos": {
@@ -325,7 +326,7 @@
                     "group": [],
                     "metricColumn": "none",
                     "rawQuery": true,
-                    "rawSql": "SELECT date as \"time\", sum (cases) as global_cases\nFROM world\nGROUP BY time\nORDER BY time;",
+                    "rawSql": "SELECT date as \"time\", sum (cases) AS global_cases\nFROM world\nGROUP BY time\nORDER BY time;",
                     "refId": "A",
                     "select": [
                         [
@@ -560,7 +561,7 @@
             "cacheTimeout": null,
             "datasource": "NYT Covid 19 ",
             "gridPos": {
-                "h": 4,
+                "h": 5,
                 "w": 6,
                 "x": 18,
                 "y": 12
@@ -648,10 +649,10 @@
             "cacheTimeout": null,
             "datasource": "NYT Covid 19 ",
             "gridPos": {
-                "h": 3,
+                "h": 5,
                 "w": 6,
                 "x": 18,
-                "y": 16
+                "y": 17
             },
             "id": 7,
             "links": [],
@@ -741,14 +742,300 @@
             "type": "stat"
         },
         {
+            "aliasColors": {
+                "total_cases": "blue",
+                "total_deaths": "red"
+            },
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "NYT Covid 19 ",
+            "description": "Sweden has elected not to do social distancing and is instead aiming for herd immunity.",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 10,
+                "w": 9,
+                "x": 0,
+                "y": 22
+            },
+            "hiddenSeries": false,
+            "id": 51,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [
+                {
+                    "alias": "total_deaths",
+                    "yaxis": 2
+                }
+            ],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", sum (cases) / 10.23 as sweden_cases\nFROM world\nWHERE country = 'Sweden'\nGROUP BY time\nORDER BY time;",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                },
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", sum (cases) / 330 as us_cases\nFROM world\nWHERE country = 'US'\nGROUP BY time\nORDER BY time;",
+                    "refId": "B",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Sweden vs US Cases (per capita)",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {
+                "total_cases": "blue",
+                "total_deaths": "red"
+            },
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "NYT Covid 19 ",
+            "description": "South Korea and the United States detected their first case on the same day.",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 10,
+                "w": 9,
+                "x": 9,
+                "y": 22
+            },
+            "hiddenSeries": false,
+            "id": 52,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [
+                {
+                    "alias": "total_deaths",
+                    "yaxis": 2
+                }
+            ],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", sum (cases) / 51.64 as south_korea_cases\nFROM world\nWHERE country = 'Korea, South'\nGROUP BY time\nORDER BY time;",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                },
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", sum (cases) / 330 as us_cases\nFROM world\nWHERE country = 'US'\nGROUP BY time\nORDER BY time;",
+                    "refId": "B",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "South Korea vs US Cases (per capita)",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
             "cacheTimeout": null,
             "datasource": "NYT Covid 19 ",
             "description": "(Dependent on Testing Efficiency)",
             "gridPos": {
-                "h": 3,
+                "h": 5,
                 "w": 6,
                 "x": 18,
-                "y": 19
+                "y": 22
             },
             "id": 50,
             "links": [],
@@ -810,7 +1097,7 @@
                     "group": [],
                     "metricColumn": "none",
                     "rawQuery": true,
-                    "rawSql": "SELECT date, sum(deaths) / sum(cases) AS mortality\nFROM states\nGROUP BY date\nORDER BY date DESC",
+                    "rawSql": "SELECT date, sum(deaths) / sum(cases) * 100 AS mortality\nFROM states\nGROUP BY date\nORDER BY date DESC",
                     "refId": "A",
                     "select": [
                         [
@@ -852,7 +1139,7 @@
                 "h": 10,
                 "w": 12,
                 "x": 0,
-                "y": 22
+                "y": 32
             },
             "hiddenSeries": false,
             "id": 26,
@@ -994,7 +1281,7 @@
                 "h": 10,
                 "w": 12,
                 "x": 12,
-                "y": 22
+                "y": 32
             },
             "hiddenSeries": false,
             "id": 14,
@@ -1102,7 +1389,7 @@
                 "h": 8,
                 "w": 12,
                 "x": 0,
-                "y": 32
+                "y": 42
             },
             "hiddenSeries": false,
             "id": 12,
@@ -1238,7 +1525,7 @@
                 "h": 8,
                 "w": 12,
                 "x": 12,
-                "y": 32
+                "y": 42
             },
             "hiddenSeries": false,
             "id": 13,
@@ -1372,7 +1659,7 @@
                 "h": 8,
                 "w": 12,
                 "x": 0,
-                "y": 40
+                "y": 50
             },
             "hiddenSeries": false,
             "id": 15,
@@ -1482,7 +1769,7 @@
                 "h": 8,
                 "w": 12,
                 "x": 12,
-                "y": 40
+                "y": 50
             },
             "hiddenSeries": false,
             "id": 16,
@@ -1590,7 +1877,7 @@
                 "h": 8,
                 "w": 12,
                 "x": 0,
-                "y": 48
+                "y": 58
             },
             "hiddenSeries": false,
             "id": 17,
@@ -1726,7 +2013,7 @@
                 "h": 8,
                 "w": 12,
                 "x": 12,
-                "y": 48
+                "y": 58
             },
             "hiddenSeries": false,
             "id": 18,
@@ -1860,7 +2147,7 @@
                 "h": 9,
                 "w": 24,
                 "x": 0,
-                "y": 56
+                "y": 66
             },
             "hiddenSeries": false,
             "id": 25,
@@ -1966,9 +2253,117 @@
             "fillGradient": 0,
             "gridPos": {
                 "h": 9,
-                "w": 12,
+                "w": 24,
                 "x": 0,
-                "y": 65
+                "y": 75
+            },
+            "hiddenSeries": false,
+            "id": 54,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", state, (deaths / (SELECT sum(population2019) FROM population WHERE states.state = population.state)) as value\nFROM states\nWHERE state IN ('Louisiana', 'Georgia', 'Michigan', 'Florida')\nGROUP BY time, state, deaths\nORDER BY time, state ASC;",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Key New Hotspot Deaths (per capita)",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "NYT Covid 19 ",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 9,
+                "w": 8,
+                "x": 0,
+                "y": 84
             },
             "hiddenSeries": false,
             "id": 4,
@@ -2074,9 +2469,9 @@
             "fillGradient": 0,
             "gridPos": {
                 "h": 9,
-                "w": 12,
-                "x": 12,
-                "y": 65
+                "w": 8,
+                "x": 8,
+                "y": 84
             },
             "hiddenSeries": false,
             "id": 38,
@@ -2182,9 +2577,117 @@
             "fillGradient": 0,
             "gridPos": {
                 "h": 9,
-                "w": 12,
+                "w": 8,
+                "x": 16,
+                "y": 84
+            },
+            "hiddenSeries": false,
+            "id": 55,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", state, (cases / (SELECT sum(population2019) FROM population WHERE states.state = population.state)) as cases_per_capita\nFROM states\nWHERE state IN ($state_picker)\nGROUP BY time, state, cases\nORDER BY time, state ASC;",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "State by State Cases (per capita)",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "NYT Covid 19 ",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 8,
+                "w": 8,
                 "x": 0,
-                "y": 74
+                "y": 93
             },
             "hiddenSeries": false,
             "id": 24,
@@ -2289,10 +2792,10 @@
             "fill": 1,
             "fillGradient": 0,
             "gridPos": {
-                "h": 9,
-                "w": 12,
-                "x": 12,
-                "y": 74
+                "h": 8,
+                "w": 8,
+                "x": 8,
+                "y": 93
             },
             "hiddenSeries": false,
             "id": 39,
@@ -2389,13 +2892,121 @@
             }
         },
         {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "NYT Covid 19 ",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 16,
+                "y": 93
+            },
+            "hiddenSeries": false,
+            "id": 56,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", state, (deaths / (SELECT sum(population2019) FROM population WHERE states.state = population.state)) as deaths_per_capita\nFROM states\nWHERE state in ($state_picker)\nGROUP BY time, state, deaths\nORDER BY time, state ASC;",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "State by State Deaths (per capita)",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
             "content": "\n# Political Considerations\n\n\n\n",
             "datasource": null,
             "gridPos": {
                 "h": 2,
                 "w": 24,
                 "x": 0,
-                "y": 83
+                "y": 101
             },
             "id": 43,
             "mode": "markdown",
@@ -2423,7 +3034,7 @@
                 "h": 11,
                 "w": 12,
                 "x": 0,
-                "y": 85
+                "y": 103
             },
             "hiddenSeries": false,
             "id": 9,
@@ -2563,7 +3174,7 @@
                 "h": 11,
                 "w": 12,
                 "x": 12,
-                "y": 85
+                "y": 103
             },
             "hiddenSeries": false,
             "id": 10,
@@ -2705,7 +3316,7 @@
                 "h": 11,
                 "w": 24,
                 "x": 0,
-                "y": 96
+                "y": 114
             },
             "hiddenSeries": false,
             "id": 37,
@@ -2839,7 +3450,7 @@
                 "h": 5,
                 "w": 6,
                 "x": 0,
-                "y": 107
+                "y": 125
             },
             "id": 46,
             "options": {
@@ -2917,7 +3528,7 @@
                 "h": 5,
                 "w": 6,
                 "x": 6,
-                "y": 107
+                "y": 125
             },
             "id": 47,
             "options": {
@@ -2995,7 +3606,7 @@
                 "h": 5,
                 "w": 6,
                 "x": 12,
-                "y": 107
+                "y": 125
             },
             "id": 48,
             "options": {
@@ -3073,7 +3684,7 @@
                 "h": 5,
                 "w": 6,
                 "x": 18,
-                "y": 107
+                "y": 125
             },
             "id": 49,
             "options": {
@@ -3152,7 +3763,7 @@
                 "h": 2,
                 "w": 24,
                 "x": 0,
-                "y": 112
+                "y": 130
             },
             "id": 44,
             "mode": "markdown",
@@ -3171,7 +3782,7 @@
                 "h": 11,
                 "w": 24,
                 "x": 0,
-                "y": 114
+                "y": 132
             },
             "id": 22,
             "options": {},
@@ -3260,7 +3871,7 @@
                 "h": 11,
                 "w": 24,
                 "x": 0,
-                "y": 125
+                "y": 143
             },
             "id": 23,
             "options": {},
@@ -3356,7 +3967,7 @@
                 "h": 11,
                 "w": 24,
                 "x": 0,
-                "y": 136
+                "y": 154
             },
             "id": 20,
             "options": {},
@@ -3473,6 +4084,258 @@
             "title": "Table of Cases and Deaths by State",
             "transform": "table",
             "type": "table"
+        },
+        {
+            "columns": [],
+            "datasource": "NYT Covid 19 ",
+            "fontSize": "100%",
+            "gridPos": {
+                "h": 11,
+                "w": 24,
+                "x": 0,
+                "y": 165
+            },
+            "id": 53,
+            "options": {},
+            "pageSize": 1000,
+            "showHeader": true,
+            "sort": {
+                "col": 1,
+                "desc": false
+            },
+            "styles": [
+                {
+                    "alias": "",
+                    "align": "left",
+                    "colorMode": null,
+                    "colors": [
+                        "rgba(245, 54, 54, 0.9)",
+                        "rgba(237, 129, 40, 0.89)",
+                        "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "date",
+                    "thresholds": [],
+                    "type": "date",
+                    "unit": "short"
+                },
+                {
+                    "alias": "",
+                    "align": "left",
+                    "colorMode": "cell",
+                    "colors": [
+                        "#FF9830",
+                        "#E0B400",
+                        "rgba(245, 54, 54, 0.9)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 0,
+                    "mappingType": 1,
+                    "pattern": "cases",
+                    "thresholds": [
+                        "1000",
+                        "10000"
+                    ],
+                    "type": "number",
+                    "unit": "locale"
+                },
+                {
+                    "alias": "",
+                    "align": "auto",
+                    "colorMode": "cell",
+                    "colors": [
+                        "#FF9830",
+                        "#E0B400",
+                        "rgba(245, 54, 54, 0.9)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 0,
+                    "mappingType": 1,
+                    "pattern": "deaths",
+                    "thresholds": [
+                        "100",
+                        "1000"
+                    ],
+                    "type": "number",
+                    "unit": "locale"
+                },
+                {
+                    "alias": "",
+                    "align": "left",
+                    "colorMode": null,
+                    "colors": [
+                        "rgba(245, 54, 54, 0.9)",
+                        "rgba(237, 129, 40, 0.89)",
+                        "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "decimals": 2,
+                    "pattern": "/.*/",
+                    "thresholds": [],
+                    "type": "number",
+                    "unit": "short"
+                }
+            ],
+            "targets": [
+                {
+                    "format": "table",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT state, county, date, cases, deaths\nFROM counties\nWHERE date >= current_date - interval '10' day and\n      state IN ($state_picker)\nGROUP BY state, county, date, cases, deaths\nORDER BY state ASC, date DESC, county ASC;",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Table of Cases and Deaths by State and County",
+            "transform": "table",
+            "type": "table"
+        },
+        {
+            "columns": [],
+            "datasource": "NYT Covid 19 ",
+            "fontSize": "100%",
+            "gridPos": {
+                "h": 11,
+                "w": 24,
+                "x": 0,
+                "y": 176
+            },
+            "id": 57,
+            "options": {},
+            "pageSize": 1000,
+            "showHeader": true,
+            "sort": {
+                "col": null,
+                "desc": false
+            },
+            "styles": [
+                {
+                    "alias": "",
+                    "align": "left",
+                    "colorMode": null,
+                    "colors": [
+                        "rgba(245, 54, 54, 0.9)",
+                        "rgba(237, 129, 40, 0.89)",
+                        "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "date",
+                    "thresholds": [],
+                    "type": "date",
+                    "unit": "short"
+                },
+                {
+                    "alias": "",
+                    "align": "left",
+                    "colorMode": "cell",
+                    "colors": [
+                        "#FF9830",
+                        "#E0B400",
+                        "rgba(245, 54, 54, 0.9)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 0,
+                    "mappingType": 1,
+                    "pattern": "cases",
+                    "thresholds": [
+                        "1000",
+                        "10000"
+                    ],
+                    "type": "number",
+                    "unit": "locale"
+                },
+                {
+                    "alias": "",
+                    "align": "auto",
+                    "colorMode": "cell",
+                    "colors": [
+                        "#FF9830",
+                        "#E0B400",
+                        "rgba(245, 54, 54, 0.9)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 0,
+                    "mappingType": 1,
+                    "pattern": "deaths",
+                    "thresholds": [
+                        "100",
+                        "1000"
+                    ],
+                    "type": "number",
+                    "unit": "locale"
+                },
+                {
+                    "alias": "",
+                    "align": "left",
+                    "colorMode": null,
+                    "colors": [
+                        "rgba(245, 54, 54, 0.9)",
+                        "rgba(237, 129, 40, 0.89)",
+                        "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "decimals": 10,
+                    "pattern": "/.capita/",
+                    "thresholds": [],
+                    "type": "number",
+                    "unit": "short"
+                }
+            ],
+            "targets": [
+                {
+                    "format": "table",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date, \n       state, \n       cases, \n       deaths, \n       (cases / (SELECT sum(population2019) from population WHERE state = population.state)) AS cases_per_capita,\n       (deaths / (SELECT sum(population2019) from population WHERE state = population.state)) AS deaths_per_capita\nFROM states\nWHERE date >= current_date - interval '3' day\nGROUP BY state, date, cases, deaths\nORDER BY date DESC, cases_per_capita DESC;",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Table of Cases and Deaths (All States)",
+            "transform": "table",
+            "type": "table"
         }
     ],
     "refresh": "",
@@ -3484,9 +4347,12 @@
             {
                 "allValue": null,
                 "current": {
-                    "text": "",
+                    "text": "Florida + Georgia + Michigan + New York",
                     "value": [
-                        ""
+                        "Florida",
+                        "Georgia",
+                        "Michigan",
+                        "New York"
                     ]
                 },
                 "datasource": "NYT Covid 19 ",
@@ -3531,5 +4397,5 @@
     "timezone": "",
     "title": "Covid 19 NYT",
     "uid": "0EQkb3rWk",
-    "version": 56
+    "version": 68
 }

@@ -15,6 +15,10 @@ DROP TABLE world CASCADE;
 DROP TABLE employment CASCADE;
 \COPY employment FROM unemployment/unemployment.csv CSV HEADER;
 
+-- get population data:
+-- refresh population data
+DROP TABLE population CASCADE;
+\COPY population FROM county-population/populationdata.csv CSV HEADER;
 
 -- View international trend in reverse chronoogical order
 SELECT date, sum (cases) as total_cases, sum(recovered) as total_recovered, sum (deaths) as total_deaths

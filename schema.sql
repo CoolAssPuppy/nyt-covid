@@ -99,3 +99,13 @@ CREATE TABLE "gdp" (
     county TEXT,
     dollars NUMERIC
 );
+
+CREATE TABLE "population" (
+    statecode NUMERIC,
+    countycode NUMERIC,
+    fips NUMERIC,
+    state TEXT,
+    county TEXT,
+    population2010 NUMERIC,
+    population2019 NUMERIC
+);
