@@ -32,6 +32,24 @@ FROM world
 GROUP BY date, country, latitude, longitude
 ORDER BY date DESC, country ASC;
 
+-- view global rate of change
+SELECT date, 
+       sum(cases) AS today,
+       lag(cases, 1) OVER (ORDER BY date) AS yesterday
+FROM world
+GROUP BY date, cases
+ORDER BY date DESC;
+
+-- view US rate of change
+SELECT date, cases,
+             lag(cases, 1) OVER (
+                                 ORDER BY date) AS yesterday
+FROM world
+WHERE country = 'US'
+GROUP BY date, cases
+ORDER BY date DESC;
+
+
 -- View US national trend in reverse chronological order
 SELECT date, sum (cases) as total_cases, sum (deaths) as total_deaths
 FROM states
@@ -119,16 +137,16 @@ ORDER BY date desc;
 
 -- View the daily rate of change in cases as reverse chronologial order as date columns
 -- first let's view the raw change in cases
-SELECT time_bucket('1 day', date) AS day,
+SELECT time_bucket('1 day', date) AS time,
        state,
        cases,
        lag(cases, 1) OVER (
-           PARTITION BY state
-           ORDER BY date
+           PARTITION BY state 
+           ORDER BY date 
        ) previous_day,
-       round (100 * (cases - lag(cases, 1) OVER (PARTITION BY state ORDER BY date)) / lag(cases, 1) OVER (PARTITION BY state ORDER BY date)) AS rate_of_change
+       round (100 * (cases - lag(cases, 1) OVER (PARTITION BY state ORDER BY date)) / 
+              (1 + (lag(cases, 1) OVER (PARTITION BY state ORDER BY date)))) AS rate_of_change
 FROM states
-WHERE date >= current_date - interval '10' day
 GROUP BY date, state, cases
 ORDER BY date DESC, rate_of_change DESC;
 
@@ -140,7 +158,8 @@ SELECT time_bucket('1 day', date) AS day,
            PARTITION BY state
            ORDER BY date
        ) previous_day,
-       round (100 * (cases - lag(cases, 1) OVER (PARTITION BY state ORDER BY date)) / lag(cases, 1) OVER (PARTITION BY state ORDER BY date)) AS rate_of_change
+       round (100 * (cases - lag(cases, 1) OVER (PARTITION BY state ORDER BY date)) / (1 + (lag(cases, 1) OVER (PARTITION BY state
+                    ORDER BY date)))) AS rate_of_change
 FROM states
 WHERE date >= current_date - interval '10' day
 GROUP BY date, state, cases
@@ -154,7 +173,8 @@ SELECT time_bucket('1 day', date) AS day,
            PARTITION BY state
            ORDER BY date
        ) previous_day,
-       round (100 * (deaths - lag(deaths, 1) OVER (PARTITION BY state ORDER BY date)) / (1 + lag(deaths, 1) OVER (PARTITION BY state ORDER BY date))) AS rate_of_change
+       round (100 * (deaths - lag(deaths, 1) OVER (PARTITION BY state ORDER BY date)) / (1 + (lag(deaths, 1) OVER (PARTITION BY state
+                     ORDER BY date)))) AS rate_of_change
 FROM states
 WHERE date >= current_date - interval '10' day
 GROUP BY date, state, deaths
@@ -164,14 +184,16 @@ ORDER BY date DESC, deaths DESC;
 SELECT time_bucket('1 day', date) AS day,
        state,
        deaths,
-       lag(deaths, 1) OVER (
-           PARTITION BY state
-           ORDER BY date
-       ) previous_day
+       lag(deaths, 1) OVER ( PARTITION BY state
+                           ORDER BY date ) previous_day,
+                          round (100 * (deaths - lag(deaths, 1) OVER (PARTITION BY state
+                                                                    ORDER BY date)) / (1 + (lag(deaths, 1) OVER (PARTITION BY state
+                     ORDER BY date)))) AS rate_of_change
 FROM states
 WHERE date >= current_date - interval '10' day
-GROUP BY date, state, deaths
-ORDER BY date DESC, deaths DESC \crosstabview state day deaths;
+GROUP BY date, state,
+               deaths
+ORDER BY date DESC, rate_of_change ASC \crosstabview state day rate_of_change;
 
 -- View national trend in reverse chronological order with percent changed
 -- TODO
@@ -363,3 +385,46 @@ SELECT time_bucket('30d', date) AS time,
 FROM employment
 WHERE employment.fips IN (SELECT fips FROM battleground_counties)
 GROUP BY date;
+
+-- POPULATION DATA
+
+-- what is the population of the United States?
+SELECT sum(population2019) FROM population
+
+-- what is the population of the Trump counties in the United States
+SELECT sum(population2019)
+FROM population
+WHERE population.fips IN
+        (SELECT fips
+         FROM trump_counties);
+
+-- what is the population of the Clinton counties in the United States
+SELECT sum(population2019)
+FROM population
+WHERE population.fips IN
+        (SELECT fips
+         FROM clinton_counties);
+
+-- what is the per capita case and death rate in Trump counties
+SELECT counties.date,
+       sum (counties.cases) as total_cases,
+       sum (counties.deaths) as total_deaths,
+       sum (counties.cases) / 
+    (SELECT sum(population2019)
+     FROM population
+     WHERE population.fips IN
+             (SELECT fips
+              FROM trump_counties)) as per_capita_cases,
+       sum (counties.deaths) / 
+    (SELECT sum(population2019)
+     FROM population
+     WHERE population.fips IN
+             (SELECT fips
+              FROM trump_counties)) as per_capita_deaths
+FROM counties
+WHERE counties.fips IN
+        (SELECT fips
+         FROM trump_counties)
+    AND date >= current_date - interval '10' day
+GROUP BY date
+ORDER BY date DESC;

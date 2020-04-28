@@ -16,7 +16,7 @@
     "gnetId": null,
     "graphTooltip": 0,
     "id": 5,
-    "iteration": 1587573452033,
+    "iteration": 1588033565665,
     "links": [],
     "panels": [
         {
@@ -38,7 +38,7 @@
             "type": "text"
         },
         {
-            "circleMaxSize": 30,
+            "circleMaxSize": "5",
             "circleMinSize": "1",
             "colors": [
                 "#37872D",
@@ -54,18 +54,18 @@
             "esMetric": "Count",
             "gridPos": {
                 "h": 10,
-                "w": 18,
+                "w": 20,
                 "x": 0,
                 "y": 2
             },
             "hideEmpty": false,
             "hideZero": false,
             "id": 36,
-            "initialZoom": "2",
+            "initialZoom": "3",
             "locationData": "table",
-            "mapCenter": "North America",
-            "mapCenterLatitude": 40,
-            "mapCenterLongitude": -100,
+            "mapCenter": "custom",
+            "mapCenterLatitude": "40",
+            "mapCenterLongitude": "-15",
             "maxDataPoints": 1,
             "mouseWheelZoom": false,
             "options": {},
@@ -121,8 +121,8 @@
             "datasource": "NYT Covid 19 ",
             "gridPos": {
                 "h": 5,
-                "w": 6,
-                "x": 18,
+                "w": 4,
+                "x": 20,
                 "y": 2
             },
             "id": 31,
@@ -199,8 +199,8 @@
             "datasource": "NYT Covid 19 ",
             "gridPos": {
                 "h": 5,
-                "w": 6,
-                "x": 18,
+                "w": 4,
+                "x": 20,
                 "y": 7
             },
             "id": 34,
@@ -286,7 +286,7 @@
             "fillGradient": 0,
             "gridPos": {
                 "h": 10,
-                "w": 9,
+                "w": 10,
                 "x": 0,
                 "y": 12
             },
@@ -428,8 +428,8 @@
             "fillGradient": 0,
             "gridPos": {
                 "h": 10,
-                "w": 9,
-                "x": 9,
+                "w": 10,
+                "x": 10,
                 "y": 12
             },
             "hiddenSeries": false,
@@ -562,8 +562,8 @@
             "datasource": "NYT Covid 19 ",
             "gridPos": {
                 "h": 5,
-                "w": 6,
-                "x": 18,
+                "w": 4,
+                "x": 20,
                 "y": 12
             },
             "id": 6,
@@ -650,8 +650,8 @@
             "datasource": "NYT Covid 19 ",
             "gridPos": {
                 "h": 5,
-                "w": 6,
-                "x": 18,
+                "w": 4,
+                "x": 20,
                 "y": 17
             },
             "id": 7,
@@ -754,8 +754,8 @@
             "fill": 1,
             "fillGradient": 0,
             "gridPos": {
-                "h": 10,
-                "w": 9,
+                "h": 5,
+                "w": 5,
                 "x": 0,
                 "y": 22
             },
@@ -893,13 +893,156 @@
             "dashLength": 10,
             "dashes": false,
             "datasource": "NYT Covid 19 ",
+            "description": "Sweden has elected not to do social distancing and is instead aiming for herd immunity.",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 5,
+                "w": 5,
+                "x": 5,
+                "y": 22
+            },
+            "hiddenSeries": false,
+            "id": 61,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [
+                {
+                    "alias": "total_deaths",
+                    "yaxis": 2
+                }
+            ],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", sum (deaths) / 10.23 as sweden_cases\nFROM world\nWHERE country = 'Sweden'\nGROUP BY time\nORDER BY time;",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                },
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", sum (deaths) / 330 as us_cases\nFROM world\nWHERE country = 'US'\nGROUP BY time\nORDER BY time;",
+                    "refId": "B",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Sweden vs US Deaths (per capita)",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {
+                "total_cases": "blue",
+                "total_deaths": "red"
+            },
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "NYT Covid 19 ",
             "description": "South Korea and the United States detected their first case on the same day.",
             "fill": 1,
             "fillGradient": 0,
             "gridPos": {
-                "h": 10,
-                "w": 9,
-                "x": 9,
+                "h": 5,
+                "w": 5,
+                "x": 10,
                 "y": 22
             },
             "hiddenSeries": false,
@@ -1028,13 +1171,156 @@
             }
         },
         {
+            "aliasColors": {
+                "total_cases": "blue",
+                "total_deaths": "red"
+            },
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "NYT Covid 19 ",
+            "description": "South Korea and the United States detected their first case on the same day.",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 5,
+                "w": 5,
+                "x": 15,
+                "y": 22
+            },
+            "hiddenSeries": false,
+            "id": 62,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [
+                {
+                    "alias": "total_deaths",
+                    "yaxis": 2
+                }
+            ],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", sum (deaths) / 51.64 as south_korea_cases\nFROM world\nWHERE country = 'Korea, South'\nGROUP BY time\nORDER BY time;",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                },
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT date as \"time\", sum (deaths) / 330 as us_cases\nFROM world\nWHERE country = 'US'\nGROUP BY time\nORDER BY time;",
+                    "refId": "B",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "South Korea vs US Deaths (per capita)",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
             "cacheTimeout": null,
             "datasource": "NYT Covid 19 ",
             "description": "(Dependent on Testing Efficiency)",
             "gridPos": {
                 "h": 5,
-                "w": 6,
-                "x": 18,
+                "w": 4,
+                "x": 20,
                 "y": 22
             },
             "id": 50,
@@ -1139,7 +1425,7 @@
                 "h": 10,
                 "w": 12,
                 "x": 0,
-                "y": 32
+                "y": 27
             },
             "hiddenSeries": false,
             "id": 26,
@@ -1281,7 +1567,7 @@
                 "h": 10,
                 "w": 12,
                 "x": 12,
-                "y": 32
+                "y": 27
             },
             "hiddenSeries": false,
             "id": 14,
@@ -1389,7 +1675,7 @@
                 "h": 8,
                 "w": 12,
                 "x": 0,
-                "y": 42
+                "y": 37
             },
             "hiddenSeries": false,
             "id": 12,
@@ -1525,7 +1811,7 @@
                 "h": 8,
                 "w": 12,
                 "x": 12,
-                "y": 42
+                "y": 37
             },
             "hiddenSeries": false,
             "id": 13,
@@ -1659,7 +1945,7 @@
                 "h": 8,
                 "w": 12,
                 "x": 0,
-                "y": 50
+                "y": 45
             },
             "hiddenSeries": false,
             "id": 15,
@@ -1769,7 +2055,7 @@
                 "h": 8,
                 "w": 12,
                 "x": 12,
-                "y": 50
+                "y": 45
             },
             "hiddenSeries": false,
             "id": 16,
@@ -1877,7 +2163,7 @@
                 "h": 8,
                 "w": 12,
                 "x": 0,
-                "y": 58
+                "y": 53
             },
             "hiddenSeries": false,
             "id": 17,
@@ -2013,7 +2299,7 @@
                 "h": 8,
                 "w": 12,
                 "x": 12,
-                "y": 58
+                "y": 53
             },
             "hiddenSeries": false,
             "id": 18,
@@ -2145,9 +2431,9 @@
             "fillGradient": 0,
             "gridPos": {
                 "h": 9,
-                "w": 24,
+                "w": 12,
                 "x": 0,
-                "y": 66
+                "y": 61
             },
             "hiddenSeries": false,
             "id": 25,
@@ -2253,9 +2539,9 @@
             "fillGradient": 0,
             "gridPos": {
                 "h": 9,
-                "w": 24,
-                "x": 0,
-                "y": 75
+                "w": 12,
+                "x": 12,
+                "y": 61
             },
             "hiddenSeries": false,
             "id": 54,
@@ -2363,7 +2649,7 @@
                 "h": 9,
                 "w": 8,
                 "x": 0,
-                "y": 84
+                "y": 70
             },
             "hiddenSeries": false,
             "id": 4,
@@ -2471,7 +2757,7 @@
                 "h": 9,
                 "w": 8,
                 "x": 8,
-                "y": 84
+                "y": 70
             },
             "hiddenSeries": false,
             "id": 38,
@@ -2579,7 +2865,7 @@
                 "h": 9,
                 "w": 8,
                 "x": 16,
-                "y": 84
+                "y": 70
             },
             "hiddenSeries": false,
             "id": 55,
@@ -2687,7 +2973,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 93
+                "y": 79
             },
             "hiddenSeries": false,
             "id": 24,
@@ -2795,7 +3081,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 8,
-                "y": 93
+                "y": 79
             },
             "hiddenSeries": false,
             "id": 39,
@@ -2903,7 +3189,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 16,
-                "y": 93
+                "y": 79
             },
             "hiddenSeries": false,
             "id": 56,
@@ -3000,13 +3286,231 @@
             }
         },
         {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "NYT Covid 19 ",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 0,
+                "y": 87
+            },
+            "hiddenSeries": false,
+            "id": 59,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT time_bucket('1 day', date) AS time,\n       state,\n       round (100 * (cases - lag(cases, 1) OVER (PARTITION BY state ORDER BY date)) / (1 + (lag(cases, 1) OVER (PARTITION BY state ORDER BY date)))) AS rate_of_change\nFROM states\nWHERE states.state IN ($state_picker);",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "State by State Cases Rate of Change",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "decimals": null,
+                    "format": "percent",
+                    "label": null,
+                    "logBase": 2,
+                    "max": "150",
+                    "min": "-10",
+                    "show": true
+                },
+                {
+                    "format": "percent",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": false
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "NYT Covid 19 ",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 12,
+                "y": 87
+            },
+            "hiddenSeries": false,
+            "id": 60,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT time_bucket('1 day', date) AS time,\n       state,\n       round (100 * (deaths - lag(deaths, 1) OVER (PARTITION BY state ORDER BY date)) / (1 + (lag(deaths, 1) OVER (PARTITION BY state ORDER BY date)))) AS rate_of_change\nFROM states\nWHERE states.state IN ($state_picker);",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "State by State Deaths Rate of Change",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "decimals": null,
+                    "format": "percent",
+                    "label": null,
+                    "logBase": 2,
+                    "max": "150",
+                    "min": "-10",
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
             "content": "\n# Political Considerations\n\n\n\n",
             "datasource": null,
             "gridPos": {
                 "h": 2,
                 "w": 24,
                 "x": 0,
-                "y": 101
+                "y": 95
             },
             "id": 43,
             "mode": "markdown",
@@ -3031,10 +3535,10 @@
             "fill": 1,
             "fillGradient": 0,
             "gridPos": {
-                "h": 11,
-                "w": 12,
+                "h": 6,
+                "w": 6,
                 "x": 0,
-                "y": 103
+                "y": 97
             },
             "hiddenSeries": false,
             "id": 9,
@@ -3161,6 +3665,148 @@
             "aliasColors": {
                 "clinton_cases": "dark-blue",
                 "clinton_deaths": "light-blue",
+                "clinton_per_capita_cases": "blue",
+                "trump_cases": "red",
+                "trump_deaths": "light-red",
+                "trump_per_capita_cases": "red"
+            },
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "NYT Covid 19 ",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 6,
+                "w": 6,
+                "x": 6,
+                "y": 97
+            },
+            "hiddenSeries": false,
+            "id": 63,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pluginVersion": "6.6.2",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT counties.date as \"time\",\n       sum (counties.cases) / \n            (SELECT sum(population2019)\n             FROM population\n             WHERE population.fips IN (SELECT fips FROM trump_counties)\n            ) as trump_per_capita_cases\nFROM counties\nWHERE counties.fips IN (SELECT fips FROM trump_counties)\nGROUP BY date\nORDER BY date DESC;",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                },
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT counties.date as \"time\",\n       sum (counties.cases) / \n            (SELECT sum(population2019)\n             FROM population\n             WHERE population.fips IN (SELECT fips FROM clinton_counties)\n            ) as clinton_per_capita_cases\nFROM counties\nWHERE counties.fips IN (SELECT fips FROM clinton_counties)\nGROUP BY date\nORDER BY date DESC;",
+                    "refId": "B",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Trump vs Clinton County Cases (per capita)",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {
+                "clinton_cases": "dark-blue",
+                "clinton_deaths": "light-blue",
                 "trump_cases": "red",
                 "trump_deaths": "light-red"
             },
@@ -3171,10 +3817,10 @@
             "fill": 1,
             "fillGradient": 0,
             "gridPos": {
-                "h": 11,
-                "w": 12,
+                "h": 6,
+                "w": 6,
                 "x": 12,
-                "y": 103
+                "y": 97
             },
             "hiddenSeries": false,
             "id": 10,
@@ -3301,6 +3947,148 @@
             "aliasColors": {
                 "clinton_cases": "dark-blue",
                 "clinton_deaths": "light-blue",
+                "clitnon_per_capita_deaths": "blue",
+                "trump_cases": "red",
+                "trump_deaths": "light-red",
+                "trump_per_capita_deaths": "red"
+            },
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "NYT Covid 19 ",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 6,
+                "w": 6,
+                "x": 18,
+                "y": 97
+            },
+            "hiddenSeries": false,
+            "id": 64,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "percentage": false,
+            "pluginVersion": "6.6.2",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT counties.date as \"time\",\n       sum (counties.deaths) / \n            (SELECT sum(population2019)\n             FROM population\n             WHERE population.fips IN (SELECT fips FROM trump_counties)\n            ) as trump_per_capita_deaths\nFROM counties\nWHERE counties.fips IN (SELECT fips FROM trump_counties)\nGROUP BY date\nORDER BY date DESC;",
+                    "refId": "A",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                },
+                {
+                    "format": "time_series",
+                    "group": [],
+                    "metricColumn": "none",
+                    "rawQuery": true,
+                    "rawSql": "SELECT counties.date as \"time\",\n       sum (counties.deaths) / \n            (SELECT sum(population2019)\n             FROM population\n             WHERE population.fips IN (SELECT fips FROM clinton_counties)\n            ) as clitnon_per_capita_deaths\nFROM counties\nWHERE counties.fips IN (SELECT fips FROM clinton_counties)\nGROUP BY date\nORDER BY date DESC;",
+                    "refId": "B",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "value"
+                                ],
+                                "type": "column"
+                            }
+                        ]
+                    ],
+                    "timeColumn": "time",
+                    "where": [
+                        {
+                            "name": "$__timeFilter",
+                            "params": [],
+                            "type": "macro"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Trump vs Clinton County Deaths (per capita)",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {
+                "clinton_cases": "dark-blue",
+                "clinton_deaths": "light-blue",
                 "tc": "dark-yellow",
                 "td": "dark-red",
                 "trump_cases": "red",
@@ -3313,10 +4101,10 @@
             "fill": 1,
             "fillGradient": 0,
             "gridPos": {
-                "h": 11,
-                "w": 24,
+                "h": 10,
+                "w": 12,
                 "x": 0,
-                "y": 114
+                "y": 103
             },
             "hiddenSeries": false,
             "id": 37,
@@ -3449,8 +4237,8 @@
             "gridPos": {
                 "h": 5,
                 "w": 6,
-                "x": 0,
-                "y": 125
+                "x": 12,
+                "y": 103
             },
             "id": 46,
             "options": {
@@ -3527,8 +4315,8 @@
             "gridPos": {
                 "h": 5,
                 "w": 6,
-                "x": 6,
-                "y": 125
+                "x": 18,
+                "y": 103
             },
             "id": 47,
             "options": {
@@ -3606,7 +4394,7 @@
                 "h": 5,
                 "w": 6,
                 "x": 12,
-                "y": 125
+                "y": 108
             },
             "id": 48,
             "options": {
@@ -3684,7 +4472,7 @@
                 "h": 5,
                 "w": 6,
                 "x": 18,
-                "y": 125
+                "y": 108
             },
             "id": 49,
             "options": {
@@ -3763,7 +4551,7 @@
                 "h": 2,
                 "w": 24,
                 "x": 0,
-                "y": 130
+                "y": 113
             },
             "id": 44,
             "mode": "markdown",
@@ -3782,7 +4570,7 @@
                 "h": 11,
                 "w": 24,
                 "x": 0,
-                "y": 132
+                "y": 115
             },
             "id": 22,
             "options": {},
@@ -3871,7 +4659,7 @@
                 "h": 11,
                 "w": 24,
                 "x": 0,
-                "y": 143
+                "y": 126
             },
             "id": 23,
             "options": {},
@@ -3967,7 +4755,7 @@
                 "h": 11,
                 "w": 24,
                 "x": 0,
-                "y": 154
+                "y": 137
             },
             "id": 20,
             "options": {},
@@ -4093,7 +4881,7 @@
                 "h": 11,
                 "w": 24,
                 "x": 0,
-                "y": 165
+                "y": 148
             },
             "id": 53,
             "options": {},
@@ -4219,7 +5007,7 @@
                 "h": 11,
                 "w": 24,
                 "x": 0,
-                "y": 176
+                "y": 159
             },
             "id": 57,
             "options": {},
@@ -4338,7 +5126,7 @@
             "type": "table"
         }
     ],
-    "refresh": "",
+    "refresh": false,
     "schemaVersion": 22,
     "style": "dark",
     "tags": [],
@@ -4347,12 +5135,13 @@
             {
                 "allValue": null,
                 "current": {
-                    "text": "Florida + Georgia + Michigan + New York",
+                    "text": "Florida + Georgia + Louisiana + Michigan + Minnesota",
                     "value": [
                         "Florida",
                         "Georgia",
+                        "Louisiana",
                         "Michigan",
-                        "New York"
+                        "Minnesota"
                     ]
                 },
                 "datasource": "NYT Covid 19 ",
@@ -4377,7 +5166,7 @@
         ]
     },
     "time": {
-        "from": "now-30d",
+        "from": "now-45d",
         "to": "now"
     },
     "timepicker": {
@@ -4397,5 +5186,5 @@
     "timezone": "",
     "title": "Covid 19 NYT",
     "uid": "0EQkb3rWk",
-    "version": 68
+    "version": 77
 }
