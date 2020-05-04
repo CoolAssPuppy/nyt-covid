@@ -13,6 +13,14 @@ DROP TABLE world CASCADE;
 -- get unemployment data: https://www.bls.gov/lau/
 -- refresh employment data
 DROP TABLE employment CASCADE;
+CREATE TABLE "employment" (
+    fips NUMERIC,
+    date DATE,
+    population NUMERIC,
+    employed NUMERIC,
+    unemployed NUMERIC,
+    unemploymentrate NUMERIC
+);
 \COPY employment FROM unemployment/unemployment.csv CSV HEADER;
 
 -- get population data:
@@ -390,6 +398,25 @@ GROUP BY date;
 
 -- what is the population of the United States?
 SELECT sum(population2019) FROM population
+
+-- what is the population of Northern California?
+SELECT sum(population2019) FROM population
+WHERE county IN ('San Francisco County',
+                 'Santa Clara County',
+                 'Alameda County',
+                 'Marin County',
+                 'San Mateo County',
+                 'Contra Costa County')
+    AND state = 'California';
+
+-- what is teh population of Southern California?
+SELECT sum(population2019) FROM population
+WHERE county IN ('Los Angeles County',
+                 'Ventura County',
+                 'Orange County',
+                 'San Bernardino County',
+                 'Riverside County')
+    AND state = 'California';
 
 -- what is the population of the Trump counties in the United States
 SELECT sum(population2019)

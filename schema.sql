@@ -20,21 +20,21 @@ SELECT create_hypertable('counties', 'date', 'county', 2, create_default_indexes
 CREATE INDEX ON counties (date ASC, county);
 
 CREATE VIEW northern_california AS
-SELECT date, sum (cases) as total_cases, sum (deaths) as total_deaths
+SELECT date, fips, sum (cases) as total_cases, sum (deaths) as total_deaths
 FROM counties
 WHERE county IN ('San Francisco', 'Santa Clara', 'Alameda', 'Marin', 'San Mateo', 'Contra Costa') AND state = 'California'
 GROUP BY date
 ORDER BY date DESC;
 
 CREATE VIEW southern_california AS
-SELECT date, sum (cases) as total_cases, sum (deaths) as total_deaths
+SELECT date, fips, sum (cases) as total_cases, sum (deaths) as total_deaths
 FROM counties
 WHERE county IN ('Los Angeles', 'Ventura', 'Orange', 'San Bernardino', 'Riverside') AND state = 'California'
 GROUP BY date
 ORDER BY date DESC;
 
 CREATE VIEW new_york_city AS
-SELECT date, sum(cases) as total_cases, sum(deaths) as total_deaths
+SELECT date, fips, sum(cases) as total_cases, sum(deaths) as total_deaths
 FROM counties
 WHERE county IN ('New York City', 'Manhattan', 'Bronx', 'Brooklyn', 'Queens', 'Staten Island') AND state = 'New York'
 GROUP BY date
