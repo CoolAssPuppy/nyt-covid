@@ -49,18 +49,22 @@ GROUP BY date, cases
 ORDER BY date DESC;
 
 -- view US rate of change
-SELECT date, cases,
-             lag(cases, 1) OVER (
-                                 ORDER BY date) AS yesterday
+SELECT date, cases, lag(cases, 1) OVER (ORDER BY date) AS yesterday
 FROM world
 WHERE country = 'US'
 GROUP BY date, cases
 ORDER BY date DESC;
 
-
 -- View US national trend in reverse chronological order
 SELECT date, sum (cases) as total_cases, sum (deaths) as total_deaths
 FROM states
+GROUP BY date
+ORDER BY date DESC;
+
+-- View US national trend without New York in reverse chronological order
+SELECT date, sum (cases) as total_cases, sum (deaths) as total_deaths
+FROM states
+WHERE states.state <> 'New York'
 GROUP BY date
 ORDER BY date DESC;
 
@@ -144,7 +148,14 @@ GROUP BY date, fips, state, county
 ORDER BY date desc;
 
 -- View the daily rate of change in cases as reverse chronologial order as date columns
--- first let's view the raw change in cases
+SELECT time_bucket('1 day', date) AS time,
+       state,
+       cases - (lag(cases, 1) OVER ( PARTITION BY state ORDER BY date)) as daily_change
+FROM states
+GROUP BY date, state, cases
+ORDER BY date DESC, daily_change DESC;
+
+-- now let's view the raw change in cases as a percentage
 SELECT time_bucket('1 day', date) AS time,
        state,
        cases,
@@ -174,6 +185,14 @@ GROUP BY date, state, cases
 ORDER BY date DESC, rate_of_change ASC \crosstabview state day rate_of_change;
 
 -- View state-by-state trend in deaths
+SELECT time_bucket('1 day', date) AS time,
+       state,
+       deaths - (lag(deaths, 1) OVER ( PARTITION BY state ORDER BY date)) as daily_change
+FROM states
+GROUP BY date, state, deaths
+ORDER BY date DESC, daily_change DESC;
+
+-- View state-by-state trend in deaths as a percentage
 SELECT time_bucket('1 day', date) AS day,
        state,
        deaths,
