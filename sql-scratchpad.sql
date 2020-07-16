@@ -88,6 +88,35 @@ WHERE state = 'California'
 GROUP BY date, county, cases, deaths
 ORDER BY date DESC, county ASC;
 
+-- View state-level data with NYT County data
+CREATE VIEW nyt_states WITH (timescaledb.continuous) AS
+SELECT state,
+       time_bucket(INTERVAL '1 day', date) AS "day",
+       SUM(cases) AS cases,
+       SUM(deaths) AS deaths
+FROM counties
+GROUP BY state,
+         "day";
+
+-- Grafana query for change in cases per-capita daily
+WITH adjusted_state AS
+    ( SELECT date, state,
+                   cases - lag(cases) OVER (PARTITION BY state
+                                            ORDER BY date) AS chng
+     FROM states
+     WHERE state = 'California'
+     ORDER BY date ASC)
+SELECT date as "time",
+       chng as "daily change",
+       avg_chng as "7-day avg daily change"
+FROM
+    ( SELECT adjusted_state.*,
+             AVG(chng) OVER (
+                             ORDER BY date ROWS 6 PRECEDING) AS "avg_chng"
+     FROM adjusted_state) AS t1
+WHERE $__timeFilter(date)
+ORDER BY 1;
+
 -- View Northern vs. Southern California in reverse chronological order as date columns
 -- first create Views
 CREATE VIEW northern_california AS
@@ -105,7 +134,6 @@ GROUP BY date
 ORDER BY date DESC;
 
 -- now run the query
-
 SELECT *, 'NorCal' AS region FROM northern_california
 WHERE date >= current_date - interval '10' day
 UNION ALL
