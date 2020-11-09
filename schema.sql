@@ -61,15 +61,20 @@ ORDER BY date desc;
 CREATE TABLE "world" (
     date DATE,
     country TEXT,
-    provincestate TEXT,
-    latitude NUMERIC,
-    longitude NUMERIC,
     cases NUMERIC,
     recovered NUMERIC,
     deaths NUMERIC
 );
 SELECT create_hypertable('world', 'date', 'country', 2, create_default_indexes=>FALSE);
 CREATE INDEX ON world (date ASC, country);
+
+CREATE TABLE "world_static_data" (
+    city TEXT,
+    latitude NUMERIC,
+    longitude NUMERIC,
+    country TEXT,
+    population NUMERIC
+);
 
 CREATE TABLE "employment" (
     fips NUMERIC,

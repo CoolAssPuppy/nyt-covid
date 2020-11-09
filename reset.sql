@@ -98,9 +98,7 @@ GROUP BY date, fips,
                county
 ORDER BY date desc;
 
-
-CREATE TABLE "world" ( date DATE, country TEXT, provincestate TEXT, latitude NUMERIC, longitude NUMERIC, cases NUMERIC, recovered NUMERIC, deaths NUMERIC);
-
+CREATE TABLE "world" (date DATE, country TEXT, cases NUMERIC, recovered NUMERIC, deaths NUMERIC);
 
 SELECT create_hypertable('world', 'date', 'country', 2, create_default_indexes=>FALSE);
 
@@ -114,5 +112,5 @@ CREATE INDEX ON world (date ASC, country);
 
 \COPY states FROM covid-19-data/us-states.csv CSV HEADER;
 
-\COPY world FROM covid-19/data/time-series-19-covid-combined.csv CSV HEADER;
+\COPY world FROM covid-19/data/countries-aggregated.csv CSV HEADER;
 
